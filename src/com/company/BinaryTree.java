@@ -38,14 +38,12 @@ public class BinaryTree {
 		//TO BE COMPLETED
 
 		if(node != null) {
-			if (iNode.term.compareTo(node.left.term) > 0) {
-				BTNode left = node.left;
-				if(left == null) node.left = iNode;
-				else add(left, iNode);
-			} else if (iNode.term.compareTo(node.left.term) < 0) {
-				BTNode right = node.right;
-				if(right == null) node.right = iNode;
-				else add(right, iNode);
+			if ((iNode.term).compareTo(node.term) < 0) {
+				if(node.left == null) node.left = iNode;
+				else add(node.left, iNode);
+			} else if ((iNode.term).compareTo(node.term) > 0) {
+				if(node.right == null) node.right = iNode;
+				else add(node.right, iNode);
 			}
 		}
 	}

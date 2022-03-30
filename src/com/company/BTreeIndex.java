@@ -47,9 +47,9 @@ public class BTreeIndex {
 		}
 
 
-
+		ArrayList<BTNode> forRoot = termDict;
 		// Sort termDict
-		Collections.sort(termDict, new Comparator<BTNode>() {
+		Collections.sort(forRoot, new Comparator<BTNode>() {
 			@Override
 			public int compare(BTNode term1, BTNode term2) {
 				String s1 = term1.term;
@@ -58,18 +58,29 @@ public class BTreeIndex {
 			}
 		});
 
-		// Print sorted termDict
-		for(BTNode temp : termDict){
-			System.out.println(temp.term);
-			System.out.println(temp.docLists + "\n");
+		// Develop Constructing binary Search Tree
+		int size = termDict.size();
+		int rootIndex = size/2;
+
+		BTNode root = termDict.get(rootIndex);
+		BinaryTree tree = new BinaryTree();
+		System.out.println(root);
+		System.out.println("afaf");
+
+		termDict.remove(root);
+		Collections.shuffle(termDict);
+
+		// termDict without root
+		for(BTNode temp : termDict) System.out.println(temp.term + "\n" + temp.docLists  + "\n\n");
+
+
+		for(BTNode node : termDict){
+			tree.add(root, node);
 		}
 
-		// Develop Constructing binary Search Tree
-
-
+		System.out.println(root.left.term);
+		System.out.println(root.right.term);
 	}
-
-
 
 	
 	/**
