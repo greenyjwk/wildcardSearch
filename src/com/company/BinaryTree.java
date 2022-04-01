@@ -82,8 +82,16 @@ public class BinaryTree {
 	 */
 	public void printInOrder(BTNode node)
 	{
-		
-		//TO BE COMPLETED
+		if (node == null)
+			return;
+		/* first recur on left child */
+		printInOrder(node.left);
+
+		/* then print the data of node */
+		System.out.print(node.term + " ");
+
+		/* now recur on right child */
+		printInOrder(node.right);
 	}
 }
 

@@ -19,14 +19,12 @@ public class BTreeIndex {
 
 		// 1 Create BTNode array
 		// 2 Need to sort the docs first
-		//
 
 		termDict = new ArrayList<>();
 		termCheck = new ArrayList<>();
 		myDocs = docs;
 
 		for(int i = 0 ;i < docs.length; i++){
-
 			String[] tokens = docs[i].split(" ");
 			for(String token: tokens){
 				if(!termCheck.contains(token)){
@@ -61,25 +59,25 @@ public class BTreeIndex {
 		// Develop Constructing binary Search Tree
 		int size = termDict.size();
 		int rootIndex = size/2;
+		BTNode rootTemp = forRoot.get(rootIndex);
 
-		BTNode root = termDict.get(rootIndex);
+		int idx2 = termDict.indexOf(rootTemp);
+		BTNode root = termDict.get(idx2);
 		BinaryTree tree = new BinaryTree();
-		System.out.println(root);
-		System.out.println("afaf");
+		System.out.println( "Root Node: \n" + root);
 
 		termDict.remove(root);
-		Collections.shuffle(termDict);
 
 		// termDict without root
 		for(BTNode temp : termDict) System.out.println(temp.term + "\n" + temp.docLists  + "\n\n");
 
+		// Constructing the binary search tree
+		for(BTNode node : termDict) tree.add(root, node);
 
-		for(BTNode node : termDict){
-			tree.add(root, node);
-		}
+		tree.printInOrder(root);
 
-		System.out.println(root.left.term);
-		System.out.println(root.right.term);
+		BTNode temp = tree.search(root, "data");
+		System.out.println(temp.docLists);
 	}
 
 	
@@ -105,12 +103,11 @@ public class BTreeIndex {
 	{
 		ArrayList<Integer> result = search(query[0]);
 		int termId = 1;
-		while(termId<query.length)
-		{
+		while(termId<query.length) {
 			ArrayList<Integer> result1 = search(query[termId]);
 			result = merge(result,result1);
 			termId++;
-		}		
+		}
 		return result;
 	}
 	
