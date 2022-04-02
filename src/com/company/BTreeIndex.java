@@ -17,16 +17,11 @@ public class BTreeIndex {
 	public BTreeIndex(String[] docs) {
 		//TO BE COMPLETED
 
-		// 1 Create BTNode array
-		// 2 Need to sort the docs first
-		//
-
 		termDict = new ArrayList<>();
 		termCheck = new ArrayList<>();
 		myDocs = docs;
 
 		for(int i = 0 ;i < docs.length; i++){
-
 			String[] tokens = docs[i].split(" ");
 			for(String token: tokens){
 				if(!termCheck.contains(token)){
@@ -47,39 +42,32 @@ public class BTreeIndex {
 		}
 
 
-		ArrayList<BTNode> forRoot = termDict;
-		// Sort termDict
-		Collections.sort(forRoot, new Comparator<BTNode>() {
-			@Override
-			public int compare(BTNode term1, BTNode term2) {
-				String s1 = term1.term;
-				String s2 = term2.term;
-				return s1.compareToIgnoreCase(s2);
-			}
-		});
-
 		// Develop Constructing binary Search Tree
 		int size = termDict.size();
 		int rootIndex = size/2;
-
-		BTNode root = termDict.get(rootIndex);
-		BinaryTree tree = new BinaryTree();
-		System.out.println(root);
-		System.out.println("afaf");
-
-		termDict.remove(root);
-		Collections.shuffle(termDict);
+		BTNode rootParam = termDict.get(rootIndex);
+		root = rootParam;
+		termList = new BinaryTree();
+		System.out.println( "Root Node: \n" + root);
 
 		// termDict without root
-		for(BTNode temp : termDict) System.out.println(temp.term + "\n" + temp.docLists  + "\n\n");
+		for(int i = 0 ; i < termDict.size() ; i++) System.out.println(termDict.get(i).term + "\n" + termDict.get(i).docLists  + "\n\n");
+
+		// Constructing the binary search tree
+		for(BTNode node : termDict) termList.add(root, node);
+
+		termList.printInOrder(root);
+		System.out.println("\n");
 
 
-		for(BTNode node : termDict){
-			tree.add(root, node);
-		}
+		System.out.println("Root is : " + root.term );
 
-		System.out.println(root.left.term);
-		System.out.println(root.right.term);
+
+		BTNode temp = termList.search( root,"nlq");
+		System.out.println(temp.left.term);
+		System.out.println(temp.right.term);
+		System.out.println("______________");
+
 	}
 
 	
@@ -105,12 +93,11 @@ public class BTreeIndex {
 	{
 		ArrayList<Integer> result = search(query[0]);
 		int termId = 1;
-		while(termId<query.length)
-		{
+		while(termId<query.length) {
 			ArrayList<Integer> result1 = search(query[termId]);
 			result = merge(result,result1);
 			termId++;
-		}		
+		}
 		return result;
 	}
 	
@@ -122,6 +109,11 @@ public class BTreeIndex {
 	public ArrayList<Integer> wildCardSearch(String wildcard) {
 		//TO BE COMPLETED
 
+		termList.wildCardSearch(root, wildcard);
+
+
+//		ArrayList<BTNode> listOfNode = termList.wildCardSearch(root, wildcard);
+//		listOfNode.size();
 		return null;
 	}
 	
@@ -151,13 +143,27 @@ public class BTreeIndex {
 	 */
 	public static void main(String[] args)
 	{
-		String[] docs = {"text warehousing over big data",
+		String[] docs = {"nlq text warehousing over big data",
                        "dimensional data warehouse over big data",
                        "nlp before text mining",
                        "nlp before text classification"};
 		//TO BE COMPLETED with testcases
 
-		BTreeIndex btree = new BTreeIndex(docs);
+
+		BTreeIndex bTree = new BTreeIndex(docs);
+
+		ArrayList<Integer> result = bTree.search("before");
+		System.out.println(result);
+
+		String[] conjuct = {"text" ,"mining"};
+		ArrayList<Integer> resultConjuct = bTree.search(conjuct);
+		System.out.println(resultConjuct);
+
+
+
+		System.out.println("--------wild card search ");
+
+		ArrayList<Integer> temp = bTree.wildCardSearch( "wa" );
 
 
 	}

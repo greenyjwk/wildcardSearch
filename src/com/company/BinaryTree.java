@@ -73,17 +73,63 @@ public class BinaryTree {
 	public ArrayList<BTNode> wildCardSearch(BTNode n, String key)
 	{
 		//TO BE COMPLETED
+
+		BTNode temp = searchForWildcard(n, key);
+
+		//traverse the tree
+		// put all the nodes that match.
+
+
 		return null;
 	}
-	
+
+
+
+	public BTNode searchForWildcard(BTNode n, String key)
+	{
+		int wildcardLength = key.length();
+		String nodeTerm = n.term.substring(0, wildcardLength);
+
+		if( nodeTerm.length() < wildcardLength ){
+			return null;
+		}
+
+		//TO BE COMPLETED
+		if(n == null){
+			return null;
+		}else if (nodeTerm.equals(key)){
+
+			return n;
+
+		}
+		else if(key.compareTo(nodeTerm) < 0){
+
+			return searchForWildcard( n.left, key);
+		}
+		else if(key.compareTo(nodeTerm) > 0){
+
+			return searchForWildcard( n.right, key);
+		}
+
+		return null;
+	}
+
+
 	/**
 	 * Print the inverted index based on the increasing order of the terms in a subtree
 	 * @param node the root node of the subtree
 	 */
-	public void printInOrder(BTNode node)
-	{
-		
-		//TO BE COMPLETED
+	public void printInOrder(BTNode node) {
+		if (node == null)
+			return;
+		/* first recur on left child */
+		printInOrder(node.left);
+
+		/* then print the data of node */
+		System.out.print(node.term + " ");
+
+		/* now recur on right child */
+		printInOrder(node.right);
 	}
 }
 
