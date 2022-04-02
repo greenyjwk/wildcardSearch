@@ -48,7 +48,6 @@ public class BTreeIndex {
 		BTNode rootParam = termDict.get(rootIndex);
 		root = rootParam;
 		termList = new BinaryTree();
-		System.out.println( "Root Node: \n" + root);
 
 		// termDict without root
 		for(int i = 0 ; i < termDict.size() ; i++) System.out.println(termDict.get(i).term + "\n" + termDict.get(i).docLists  + "\n\n");
@@ -63,10 +62,6 @@ public class BTreeIndex {
 		System.out.println("Root is : " + root.term );
 
 
-		BTNode temp = termList.search( root,"nlq");
-		System.out.println(temp.left.term);
-		System.out.println(temp.right.term);
-		System.out.println("______________");
 
 	}
 
@@ -109,12 +104,16 @@ public class BTreeIndex {
 	public ArrayList<Integer> wildCardSearch(String wildcard) {
 		//TO BE COMPLETED
 
-		termList.wildCardSearch(root, wildcard);
+		ArrayList<BTNode> nodes = termList.wildCardSearch(root, wildcard);
 
+		if(nodes == null) return null;
 
-//		ArrayList<BTNode> listOfNode = termList.wildCardSearch(root, wildcard);
-//		listOfNode.size();
-		return null;
+		HashSet<Integer> set = new HashSet<>();
+
+		for(BTNode node : nodes) set.addAll(node.docLists);
+
+		ArrayList<Integer> result = new ArrayList<>(set);
+		return result;
 	}
 	
 	
@@ -143,7 +142,7 @@ public class BTreeIndex {
 	 */
 	public static void main(String[] args)
 	{
-		String[] docs = {"nlq text warehousing over big data",
+		String[] docs = {"text warehousing over big data",
                        "dimensional data warehouse over big data",
                        "nlp before text mining",
                        "nlp before text classification"};
@@ -160,11 +159,24 @@ public class BTreeIndex {
 		System.out.println(resultConjuct);
 
 
+		String query;
+		ArrayList<Integer> wildcarSearchResult;
 
-		System.out.println("--------wild card search ");
+		System.out.println("--------wild card search \n");
 
-		ArrayList<Integer> temp = bTree.wildCardSearch( "wa" );
+		query = "nlp";
+		wildcarSearchResult = bTree.wildCardSearch(query);
+		System.out.println("wildcard search: " + query);
+		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
+		query = "be";
+		wildcarSearchResult = bTree.wildCardSearch(query);
+		System.out.println("wildcard search: " + query);
+		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
+		query = "war";
+		wildcarSearchResult = bTree.wildCardSearch(query);
+		System.out.println("wildcard search: " + query);
+		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 	}
 }
