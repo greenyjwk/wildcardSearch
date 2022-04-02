@@ -73,43 +73,49 @@ public class BinaryTree {
 	public ArrayList<BTNode> wildCardSearch(BTNode n, String key)
 	{
 		//TO BE COMPLETED
+		ArrayList<BTNode> result = new ArrayList<>();
 
-		BTNode temp = searchForWildcard(n, key);
+		BTNode node = searchForWildcard(n, key);
 
-		//traverse the tree
+		if(node == null) return null;
+
+		Queue<BTNode> queue = new Queue();
+		queue.enqueue(node);
+
+		BTNode popedNode;
+
+		while(!queue.isEmpty()){
+			popedNode = queue.dequeue();
+			String nodeSubstring = (popedNode.term).substring(0, key.length());
+			if(nodeSubstring.equals(key)) result.add(popedNode);
+
+			if(popedNode.left != null) queue.enqueue(popedNode.left);
+			if(popedNode.right != null) queue.enqueue(popedNode.right);
+		}
+
+		// traverse the tree
 		// put all the nodes that match.
 
-
-		return null;
+		return result;
 	}
 
 
+	public BTNode searchForWildcard(BTNode n, String key) {
 
-	public BTNode searchForWildcard(BTNode n, String key)
-	{
 		int wildcardLength = key.length();
+		if( n.term.length() < wildcardLength ) return null;
+		if(n == null) return null;
+
+
 		String nodeTerm = n.term.substring(0, wildcardLength);
 
-		if( nodeTerm.length() < wildcardLength ){
-			return null;
-		}
+
 
 		//TO BE COMPLETED
-		if(n == null){
-			return null;
-		}else if (nodeTerm.equals(key)){
-
-			return n;
-
-		}
-		else if(key.compareTo(nodeTerm) < 0){
-
-			return searchForWildcard( n.left, key);
-		}
-		else if(key.compareTo(nodeTerm) > 0){
-
-			return searchForWildcard( n.right, key);
-		}
+		if(n == null) return null;
+		else if (nodeTerm.equals(key)) return n;
+		else if(key.compareTo(nodeTerm) < 0) return searchForWildcard( n.left, key);
+		else if(key.compareTo(nodeTerm) > 0) return searchForWildcard( n.right, key);
 
 		return null;
 	}
@@ -132,4 +138,3 @@ public class BinaryTree {
 		printInOrder(node.right);
 	}
 }
-
