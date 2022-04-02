@@ -178,5 +178,7 @@ public class BTreeIndex {
 		wildcarSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query);
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+
+		System.out.println("git check");
 	}
 }
