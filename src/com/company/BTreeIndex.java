@@ -48,12 +48,13 @@ public class BTreeIndex {
 		root = rootParam;
 		termList = new BinaryTree();
 
-		// termDict without root
-		for(int i = 0 ; i < termDict.size() ; i++) System.out.println(termDict.get(i).term + "\n" + termDict.get(i).docLists  + "\n\n");
+		// Print nodes with containing ID
+		for(int i = 0 ; i < termDict.size() ; i++) System.out.println(termDict.get(i).term + " " + termDict.get(i).docLists );
 
 		// Constructing the binary search tree
 		for(BTNode node : termDict) termList.add(root, node);
 
+		System.out.println("\n\n----------------Print out the nodes in order----------------");
 		termList.printInOrder(root);
 		System.out.println("\n");
 	}
@@ -139,23 +140,29 @@ public class BTreeIndex {
                        "dimensional data warehouse over big data",
                        "nlp before text mining",
                        "nlp before text classification"};
-		//TO BE COMPLETED with testcases
-
 
 		BTreeIndex bTree = new BTreeIndex(docs);
 
-		ArrayList<Integer> result = bTree.search("before");
-		System.out.println(result);
+		String singleQuery;
+		ArrayList<Integer> result;
+		System.out.println("\n\n----------------Single query search----------------");
+		singleQuery = "before";
+		System.out.println("single term search: " + singleQuery);
+		result = bTree.search(singleQuery);
+		System.out.println("docId : " + result + "\n\n");
 
+		ArrayList<Integer> resultConjuct;
+		System.out.println("\n\n----------------Conjust query search----------------");
 		String[] conjuct = {"text" ,"mining"};
-		ArrayList<Integer> resultConjuct = bTree.search(conjuct);
-		System.out.println(resultConjuct);
+		System.out.println("conjuct term search: " + conjuct);
+		resultConjuct = bTree.search(conjuct);
+		System.out.println("docId : " + resultConjuct + "\n\n");
+
 
 
 		String query;
 		ArrayList<Integer> wildcarSearchResult;
-
-		System.out.println("--------wild card search \n");
+		System.out.println("\n\n----------------Wild card search----------------");
 
 		query = "nlp";
 		wildcarSearchResult = bTree.wildCardSearch(query);
@@ -168,6 +175,11 @@ public class BTreeIndex {
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
 		query = "war";
+		wildcarSearchResult = bTree.wildCardSearch(query);
+		System.out.println("wildcard search: " + query);
+		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+
+		query = "t";
 		wildcarSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query);
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
