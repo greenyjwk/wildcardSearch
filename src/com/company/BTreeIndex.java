@@ -41,7 +41,6 @@ public class BTreeIndex {
 			}
 		}
 
-
 		// Develop Constructing binary Search Tree
 		int size = termDict.size();
 		int rootIndex = size/2;
@@ -57,12 +56,6 @@ public class BTreeIndex {
 
 		termList.printInOrder(root);
 		System.out.println("\n");
-
-
-		System.out.println("Root is : " + root.term );
-
-
-
 	}
 
 	
