@@ -74,7 +74,6 @@ public class BinaryTree {
 	{
 		//TO BE COMPLETED
 		ArrayList<BTNode> result = new ArrayList<>();
-
 		BTNode node = searchForWildcard(n, key);
 
 		if(node == null) return null;
@@ -84,17 +83,15 @@ public class BinaryTree {
 
 		BTNode popedNode;
 
+		// traverse the subtree
+		// put all the nodes that match
 		while(!queue.isEmpty()){
 			popedNode = queue.dequeue();
 			String nodeSubstring = (popedNode.term).substring(0, key.length());
 			if(nodeSubstring.equals(key)) result.add(popedNode);
-
 			if(popedNode.left != null) queue.enqueue(popedNode.left);
 			if(popedNode.right != null) queue.enqueue(popedNode.right);
 		}
-
-		// traverse the tree
-		// put all the nodes that match.
 
 		return result;
 	}
@@ -102,18 +99,12 @@ public class BinaryTree {
 
 	public BTNode searchForWildcard(BTNode n, String key) {
 
+		if(n == null) return null;
 		int wildcardLength = key.length();
 		if( n.term.length() < wildcardLength ) return null;
-		if(n == null) return null;
-
 
 		String nodeTerm = n.term.substring(0, wildcardLength);
-
-
-
-		//TO BE COMPLETED
-		if(n == null) return null;
-		else if (nodeTerm.equals(key)) return n;
+		if (nodeTerm.equals(key)) return n;
 		else if(key.compareTo(nodeTerm) < 0) return searchForWildcard( n.left, key);
 		else if(key.compareTo(nodeTerm) > 0) return searchForWildcard( n.right, key);
 
