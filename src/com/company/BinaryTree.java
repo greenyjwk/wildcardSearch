@@ -35,8 +35,6 @@ public class BinaryTree {
 	 * @param iNode the node to be inserted into the subtree
 	 */
 	public void add(BTNode node, BTNode iNode){
-		//TO BE COMPLETED
-
 		if(node != null) {
 			if ((iNode.term).compareTo(node.term) < 0) {
 				if(node.left == null) node.left = iNode;
@@ -54,9 +52,7 @@ public class BinaryTree {
 	 * @param key a query term
 	 * @return tree nodes with term that match the query term or null if no match
 	 */
-	public BTNode search(BTNode n, String key)
-	{
-		//TO BE COMPLETED
+	public BTNode search(BTNode n, String key) {
 		if(n == null) return null;
 		else if (n.term.equals(key)) return n;
 		else if(key.compareTo(n.term) < 0) return search( n.left, key);
