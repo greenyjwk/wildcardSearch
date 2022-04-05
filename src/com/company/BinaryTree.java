@@ -66,11 +66,9 @@ public class BinaryTree {
 	 * @param key a wild card term, e.g., ho (terms like home will be returned)
 	 * @return tree nodes that match the wild card
 	 */
-	public ArrayList<BTNode> wildCardSearch(BTNode n, String key)
-	{
-		//TO BE COMPLETED
+	public ArrayList<BTNode> wildCardSearch(BTNode n, String key) {
 		ArrayList<BTNode> result = new ArrayList<>();
-		BTNode node = searchForWildcard(n, key);
+		BTNode node = searchWildcardNode(n, key);
 
 		if(node == null) return null;
 
@@ -88,12 +86,17 @@ public class BinaryTree {
 			if(popedNode.left != null) queue.enqueue(popedNode.left);
 			if(popedNode.right != null) queue.enqueue(popedNode.right);
 		}
-
 		return result;
 	}
 
 
-	public BTNode searchForWildcard(BTNode n, String key) {
+	/**
+	 * search the root of the subtree that contains the wildcard search term
+	 * @param n the root node of a subtree
+	 * @param key  wildcard query, e.g., ho (so that home can be located)
+	 * @return node that contains the wildcard search term
+	 */
+	public BTNode searchWildcardNode(BTNode n, String key) {
 
 		if(n == null) return null;
 		int wildcardLength = key.length();
@@ -101,8 +104,8 @@ public class BinaryTree {
 
 		String nodeTerm = n.term.substring(0, wildcardLength);
 		if (nodeTerm.equals(key)) return n;
-		else if(key.compareTo(nodeTerm) < 0) return searchForWildcard( n.left, key);
-		else if(key.compareTo(nodeTerm) > 0) return searchForWildcard( n.right, key);
+		else if(key.compareTo(nodeTerm) < 0) return searchWildcardNode( n.left, key);
+		else if(key.compareTo(nodeTerm) > 0) return searchWildcardNode( n.right, key);
 
 		return null;
 	}

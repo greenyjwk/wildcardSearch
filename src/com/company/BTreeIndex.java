@@ -15,8 +15,6 @@ public class BTreeIndex {
 	 * 
 	 */
 	public BTreeIndex(String[] docs) {
-		//TO BE COMPLETED
-
 		termDict = new ArrayList<>();
 		termCheck = new ArrayList<>();
 		myDocs = docs;
@@ -41,7 +39,7 @@ public class BTreeIndex {
 			}
 		}
 
-		// Develop Constructing binary Search Tree
+		// Construct binary Search Tree
 		int size = termDict.size();
 		int rootIndex = size/2;
 		BTNode rootParam = termDict.get(rootIndex);
@@ -143,7 +141,7 @@ public class BTreeIndex {
 
 		String singleQuery;
 		ArrayList<Integer> result;
-		System.out.println("\n\n----------------Single query search----------------");
+		System.out.println("----------------Single query search----------------");
 		singleQuery = "before";
 		System.out.println("single term search: " + singleQuery);
 		result = bTree.search(singleQuery);
@@ -155,12 +153,15 @@ public class BTreeIndex {
 		System.out.println("docId : " + result + "\n\n");
 
 
+
+
 		ArrayList<Integer> resultConjunctive;
 		System.out.println("\n\n----------------Conjunctive query search----------------");
 		String[] conjunctive = {"text" ,"mining"};
 		System.out.println("conjunctive term search: " + conjunctive[0] + "  " +  conjunctive[1]);
 		resultConjunctive = bTree.search(conjunctive);
 		System.out.println("docId : " + resultConjunctive + "\n\n");
+
 
 		String[] Conjunctive2 = {"big" ,"warehousing"};
 		System.out.println("conjunctive term search: " + Conjunctive2[0] + "  " + Conjunctive2[1]);
@@ -180,28 +181,30 @@ public class BTreeIndex {
 		System.out.println("docId : " + resultConjunctive + "\n\n");
 
 
+
+
 		String query;
 		ArrayList<Integer> wildcarSearchResult;
 		System.out.println("\n\n----------------Wildcard search----------------");
 
 		query = "nlp";
 		wildcarSearchResult = bTree.wildCardSearch(query);
-		System.out.println("wildcard search: " + query);
+		System.out.println("wildcard search: " + query + "*");
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
 		query = "be";
 		wildcarSearchResult = bTree.wildCardSearch(query);
-		System.out.println("wildcard search: " + query);
+		System.out.println("wildcard search: " + query + "*");
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
 		query = "war";
 		wildcarSearchResult = bTree.wildCardSearch(query);
-		System.out.println("wildcard search: " + query);
+		System.out.println("wildcard search: " + query + "*");
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 
 		query = "t";
 		wildcarSearchResult = bTree.wildCardSearch(query);
-		System.out.println("wildcard search: " + query);
+		System.out.println("wildcard search: " + query + "*");
 		System.out.println("docId : " + wildcarSearchResult + "\n\n");
 	}
 }
