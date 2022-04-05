@@ -42,8 +42,7 @@ public class BTreeIndex {
 		// Construct binary Search Tree
 		int size = termDict.size();
 		int rootIndex = size/2;
-		BTNode rootParam = termDict.get(rootIndex);
-		root = rootParam;
+		root = termDict.get(rootIndex);
 		termList = new BinaryTree();
 
 		// Print nodes with containing ID
@@ -55,13 +54,14 @@ public class BTreeIndex {
 //		System.out.println("\n\n----------------Print out the nodes in order----------------");
 //		termList.printInOrder(root);
 //		System.out.println("\n");
+
 	}
 
 	
 	/**
 	 * Single keyword search
 	 * @param query the query string
-	 * @return doclists that contain the term
+	 * @return docLists that contain the term
 	 */
 	public ArrayList<Integer> search(String query)
 	{
@@ -74,7 +74,7 @@ public class BTreeIndex {
 	/**
 	 * conjunctive query search
 	 * @param query the set of query terms
-	 * @return doclists that contain all the query terms
+	 * @return docLists that contain all the query terms
 	 */
 	public ArrayList<Integer> search(String[] query)
 	{
@@ -94,22 +94,18 @@ public class BTreeIndex {
 	 * @return a list of ids of documents that contain terms matching the wild card
 	 */
 	public ArrayList<Integer> wildCardSearch(String wildcard) {
+
 		ArrayList<BTNode> nodes = termList.wildCardSearch(root, wildcard);
-
 		if(nodes == null) return null;
-
 		HashSet<Integer> set = new HashSet<>();
-
 		for(BTNode node : nodes) set.addAll(node.docLists);
-
-		ArrayList<Integer> result = new ArrayList<>(set);
-		return result;
+		return new ArrayList<>(set);
 	}
 	
 	
 	private ArrayList<Integer> merge(ArrayList<Integer> l1, ArrayList<Integer> l2)
 	{
-		ArrayList<Integer> mergedList = new ArrayList<Integer>();
+		ArrayList<Integer> mergedList = new ArrayList<>();
 		int id1 = 0, id2=0;
 		while(id1<l1.size()&&id2<l2.size()){
 			if(l1.get(id1).intValue()==l2.get(id2).intValue()){
@@ -184,27 +180,27 @@ public class BTreeIndex {
 
 
 		String query;
-		ArrayList<Integer> wildcarSearchResult;
+		ArrayList<Integer> wildcardSearchResult;
 		System.out.println("\n\n----------------Wildcard search----------------");
 
 		query = "nlp";
-		wildcarSearchResult = bTree.wildCardSearch(query);
+		wildcardSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query + "*");
-		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+		System.out.println("docId : " + wildcardSearchResult + "\n\n");
 
 		query = "be";
-		wildcarSearchResult = bTree.wildCardSearch(query);
+		wildcardSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query + "*");
-		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+		System.out.println("docId : " + wildcardSearchResult + "\n\n");
 
 		query = "war";
-		wildcarSearchResult = bTree.wildCardSearch(query);
+		wildcardSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query + "*");
-		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+		System.out.println("docId : " + wildcardSearchResult + "\n\n");
 
 		query = "t";
-		wildcarSearchResult = bTree.wildCardSearch(query);
+		wildcardSearchResult = bTree.wildCardSearch(query);
 		System.out.println("wildcard search: " + query + "*");
-		System.out.println("docId : " + wildcarSearchResult + "\n\n");
+		System.out.println("docId : " + wildcardSearchResult + "\n\n");
 	}
 }
